@@ -1,5 +1,5 @@
 {
-    "name": "zfcampus/zf-oauth2-doctrine-gui",
+    "name": "api-skeletons/zf-oauth2-doctrine-gui",
     "description": "A GUI for managing zfcampus/zf-oauth2-doctrine",
     "license": "BSD-3-Clause",
     "keywords": [
