@@ -10,6 +10,7 @@ use DoctrineGui\Service\ClientService;
 use DoctrineGui\Service\JwtService;
 use DoctrineGui\Service\ScopeService;
 use ZF\OAuth2\Doctrine\Adapter\DoctrineAdapter;
+use Zend\ServiceManager\FactoryInterface;
 
 class DoctrineGuiControllerFactory implements FactoryInterface
 {
