@@ -1,8 +1,8 @@
 <?php
 namespace DoctrineGui\Form\Factory;
 
-use DoctrineAdmin\Form\JwtForm;
-use DoctrineAdmin\InputFilter\JwtFilter;
+use DoctrineGui\Form\JwtForm;
+use DoctrineGui\InputFilter\JwtFilter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

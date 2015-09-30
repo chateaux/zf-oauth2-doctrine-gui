@@ -1,8 +1,8 @@
 <?php
 namespace DoctrineGui\Form\Factory;
 
-use DoctrineAdmin\Form\ClientForm;
-use DoctrineAdmin\InputFilter\ClientFilter;
+use DoctrineGui\Form\ClientForm;
+use DoctrineGui\InputFilter\ClientFilter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
