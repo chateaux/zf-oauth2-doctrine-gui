@@ -28,7 +28,6 @@ class DoctrineGuiController extends AbstractActionController
      * @param FormInterface $clientForm
      * @param FormInterface $jwtForm
      * @param FormInterface $generateJwtForm
-     * @param ApplicationSettingsInterface $applicationSettings
      */
     public function __construct(
         ClientService          $clientService,
@@ -38,8 +37,7 @@ class DoctrineGuiController extends AbstractActionController
         DoctrineAdapter        $doctrineAdapter,
         FormInterface          $clientForm,
         FormInterface          $jwtForm,
-        FormInterface          $generateJwtForm,
-        ApplicationSettingsInterface $applicationSettings
+        FormInterface          $generateJwtForm
 
     ) {
         $this->clientService   = $clientService;
@@ -50,7 +48,6 @@ class DoctrineGuiController extends AbstractActionController
         $this->clientForm      = $clientForm;
         $this->jwtForm         = $jwtForm;
         $this->testJwtForm = $generateJwtForm;
-        $this->applicationSettings = $applicationSettings;
     }
 
     /**

@@ -1,21 +1,15 @@
 <?php
 namespace DoctrineGui\Controller\Factory;
 
-use DoctrineGui\Controller\DeveloperController;
+use DoctrineGui\Controller\DoctrineGuiController;
 use DoctrineGui\Form\ClientForm;
 use DoctrineGui\Form\GenerateJwtForm;
 use DoctrineGui\Form\JwtForm;
 use DoctrineGui\Service\AccessTokenService;
 use DoctrineGui\Service\ClientService;
 use DoctrineGui\Service\JwtService;
-use DoctrineGui\Service\OauthClientService;
 use DoctrineGui\Service\ScopeService;
-use Games\Service\GamePublisherService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Games\Service\GameServiceInterface;
 use ZF\OAuth2\Doctrine\Adapter\DoctrineAdapter;
-use ZfcRbac\Service\AuthorizationService;
 
 class DoctrineGuiControllerFactory implements FactoryInterface
 {
@@ -29,7 +23,7 @@ class DoctrineGuiControllerFactory implements FactoryInterface
     {
         $realSl = $serviceLocator->getServiceLocator();
 
-        return new DeveloperController(
+        return new DoctrineGuiController(
             $realSl->get(ClientService::class),
             $realSl->get(JwtService::class),
             $realSl->get(ScopeService::class),
@@ -37,8 +31,7 @@ class DoctrineGuiControllerFactory implements FactoryInterface
             $realSl->get(DoctrineAdapter::class),
             $realSl->get('FormElementManager')->get(ClientForm::class),
             $realSl->get('FormElementManager')->get(JwtForm::class),
-            $realSl->get('FormElementManager')->get(GenerateJwtForm::class),
-            $realSl->get(ApplicationSettingsInterface::class)
+            $realSl->get('FormElementManager')->get(GenerateJwtForm::class)
         );
     }
 }
