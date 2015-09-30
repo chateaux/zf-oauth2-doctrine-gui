@@ -1,5 +1,5 @@
 <?php
-namespace ZF\OAuth2\DoctrineGui\Console;
+namespace DoctrineGui;
 
 /**
  * ZF2 module
