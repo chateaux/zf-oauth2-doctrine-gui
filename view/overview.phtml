@@ -6,7 +6,7 @@ $this->FlashMessengerHelper();
         <div class="col-md-12">
             <div class="tab-content">
                 <div>
-                    <?=$this->DoctrinGuiNavHelper();?>
+                    <?=$this->DoctrineGuiNavHelper();?>
                     <p>
                         A publisher is a name you use to describe an entity that creates games for GamblingTec.com. It may be
                         a company name or your name or anything you choose. Please contact us to add a publisher to your account
@@ -25,17 +25,8 @@ $this->FlashMessengerHelper();
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-                                foreach ($publisher_array AS $publisher_id => $game_name) {
-                            ?>
-                            <tr>
-                                <td><?=$game_name;?></td>
-                                <td>
-                                    <a class="btn default btn-xs green" href="<?=$this->url('developer/games' , ['publisher_id' => $publisher_id]);?>">
-                                        <i class="fa fa-gamepad"></i> View Games</a>
-                                </td>
-                            </tr>
-                            <?php } ?>
+
+
                             </tbody>
                         </table>
                     </div>

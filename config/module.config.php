@@ -23,7 +23,7 @@ use DoctrineGui\Service\Factory\JwtServiceFactory;
 use DoctrineGui\Service\Factory\ScopeServiceFactory;
 use DoctrineGui\Service\JwtService;
 use DoctrineGui\Service\ScopeService;
-use DoctrineGui\View\Helper\Factory\DoctrineGuiNavHelperFactory;
+use DoctrineGui\View\Helper\DoctrineGuiNavHelper;
 use DoctrineGui\View\Helper\FlashMessageHelper;
 
 return [
@@ -57,10 +57,8 @@ return [
     ],
     'view_helpers'  => [
         'invokables'    => [
-            'FlashMessageHelper'  => FlashMessageHelper::class
-        ],
-        'factories'     => [
-            'DoctrineGuiNavHelper'  => DoctrineGuiNavHelperFactory::class,
+            'FlashMessageHelper'  => FlashMessageHelper::class,
+            'DoctrineGuiNavHelper'  => DoctrineGuiNavHelper::class
         ]
     ],
     'view_helper_config' => [

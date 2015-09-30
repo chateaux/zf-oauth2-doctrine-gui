@@ -2,15 +2,9 @@
 namespace DoctrineGui\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZfcRbac\Service\AuthorizationService;
 
 class DoctrineGuiNavHelper extends AbstractHelper
 {
-
-    public function __construct(AuthorizationService $auth)
-    {
-        $this->auth = $auth;
-    }
 
     public function __invoke()
     {
