@@ -3,7 +3,6 @@ namespace DoctrineGui;
 
 use Developer\Form\Factory\GenerateJwtFieldsetFactory;
 use DoctrineGui\Form\GenerateJwtFieldset;
-use DoctrineGui\View\Helper\Navigation\DoctrineGuiNavHelperFactory;
 use DoctrineGui\Controller\DoctrineGuiController;
 use DoctrineGui\Controller\Factory\DoctrineGuiControllerFactory;
 use DoctrineGui\Form\ClientFieldset;
@@ -24,6 +23,7 @@ use DoctrineGui\Service\Factory\JwtServiceFactory;
 use DoctrineGui\Service\Factory\ScopeServiceFactory;
 use DoctrineGui\Service\JwtService;
 use DoctrineGui\Service\ScopeService;
+use DoctrineGui\View\Helper\Factory\DoctrineGuiNavHelperFactory;
 use DoctrineGui\View\Helper\FlashMessageHelper;
 
 return [

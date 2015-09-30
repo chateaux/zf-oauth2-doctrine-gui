@@ -1,5 +1,5 @@
 <?php
-namespace DoctrineGui\View\Helper\Navigation;
+namespace DoctrineGui\View\Helper\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

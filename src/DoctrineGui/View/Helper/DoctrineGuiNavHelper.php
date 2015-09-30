@@ -1,10 +1,10 @@
 <?php
-namespace DoctrineGui\View\Helper\Navigation;
+namespace DoctrineGui\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use ZfcRbac\Service\AuthorizationService;
 
-class DoctrinGuieNavHelper extends AbstractHelper
+class DoctrineGuiNavHelper extends AbstractHelper
 {
 
     public function __construct(AuthorizationService $auth)
