@@ -1,6 +1,8 @@
 <?php
 namespace DoctrineGui;
 
+use Developer\Form\Factory\GenerateJwtFieldsetFactory;
+use DoctrineGui\Form\GenerateJwtFieldset;
 use DoctrineGui\View\Helper\Navigation\DoctrineGuiNavHelperFactory;
 use DoctrineGui\Controller\DoctrineGuiController;
 use DoctrineGui\Controller\Factory\DoctrineGuiControllerFactory;
@@ -43,7 +45,8 @@ return [
             ClientForm::class => ClientFormFactory::class,
             ClientFieldset::class => ClientFieldsetFactory::class,
             JwtFieldset::class => JwtFieldsetFactory::class,
-            JwtForm::class => JwtFormFactory::class
+            JwtForm::class => JwtFormFactory::class,
+            GenerateJwtFieldset::class => GenerateJwtFieldsetFactory::class
         ]
     ],
     'input_filters'      => [
