@@ -1,0 +1,156 @@
+<?php
+$this->FlashMessengerHelper();
+?>
+<div>
+    <div class="row profile-account">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div>
+                    <?=$this->DoctrinGuiNavHelper();?>
+                    <p>
+                        NOTE: Editing your client may cause your game to stop working.
+                    </p>
+
+                    <div class="col-md-12">
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet box grey">
+
+
+                            <div class="portlet-body form">
+                                <!-- BEGIN FORM-->
+
+                                <div class="portlet-body form">
+                                    <?php
+                                    $form = $this->form;
+                                    $form->setAttribute('action', $this->url('developer/client-manage', ['client_id' => $client_id], true) );
+                                    $form->setAttribute('class', 'form-horizontal form-bordered');
+                                    $form->setAttribute('method', 'post');
+
+                                    $form->get('submit')->setValue('Submit');
+                                    $form->get('submit')->setAttribute('class','btn green');
+                                    $form->prepare();
+
+                                    $csrf           = $form->get('csrfcheck');
+                                    $formublisher   = $form->get('client');
+                                    $id             = $formublisher->get('id');
+                                    $clientId       = $formublisher->get('clientId');
+                                    $password       = $formublisher->get('password');
+                                    $password_repeat= $formublisher->get('passwordRepeat');
+                                    $redirecrUri    = $formublisher->get('redirectUri');
+                                    $grantType      = $formublisher->get('grantType');
+                                    $scope          = $formublisher->get('scope');
+                                    $sub            = $form->get('submit');
+                                    ?>
+
+                                    <?= $this->form()->openTag($form); ?>
+
+                                    <?= $this->formElement($csrf); ?>
+                                    <div class='form-body'>
+
+                                        <?=$this->formElement($id); ?>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $clientId->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($clientId).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $clientId->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($clientId) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($clientId).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $grantType->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($grantType).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $grantType->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($grantType) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($grantType).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $scope->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($scope).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $scope->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($scope) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($scope).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $redirecrUri->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($redirecrUri).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $redirecrUri->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($redirecrUri) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($redirecrUri).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $password->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($password).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $password->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($password) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($password).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $password_repeat->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($password_repeat).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $password_repeat->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($password_repeat) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($password_repeat).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?= $this->formElement($sub); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <?= $this->form()->closeTag(); ?>
+                                    <!-- END FORM-->
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

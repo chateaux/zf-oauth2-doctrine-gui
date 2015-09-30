@@ -1,0 +1,143 @@
+<?php
+$this->FlashMessengerHelper();
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('developer/test-jwt' , [ 'jwt_id' => $jwt_id , 'client_id' => $client_id ]));
+$form->setAttribute('class', 'form');
+$form->prepare();
+
+$csrf = $form->get('csrfcheck');
+$iss  = $form->get('iss');
+$iss->setValue($this->jwt_array['issuer']);
+$sub  = $form->get('sub');
+$sub->setValue($this->jwt_array['subject']);
+$aud  = $form->get('aud');
+$exp  = $form->get('exp');
+$nbt  = $form->get('nbt');
+$jti  = $form->get('jti');
+$privkey = $form->get('privkey');
+
+$submit  = $form->get('submit');
+?>
+
+<div>
+    <div class="row profile-account">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div>
+                    <?=$this->DoctrinGuiNavHelper();?>
+                    <p>Use this section to create a test JWT web token. Once you have a token, use it in PostMan to obtain a Bearer token.</p>
+
+                    <div class="col-md-12">
+
+                    <!-- BEGIN LOGIN FORM -->
+                    <?= $this->form()->openTag($form);  ?>
+                    <h3 class="form-title">Generate a new Jason Web Token</h3>
+
+                    <?= $this->formElement($csrf); ?>
+                    <?= $this->formElementErrors($csrf); ?>
+
+                        <div class="form-group">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $privkey->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <?= $this->formElement($privkey); ?>
+                                <?= $this->formElementErrors($privkey); ?>
+                                <?php echo $privkey->getOption('instructions'); ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9">GENERATED JWT TOKEN</label>
+                            <div class="input-icon">
+                                <textarea name="jwt" rows="5" cols="40" class="form-control" disabled><?php echo $jwt;?></textarea>
+                            </div>
+                        </div>
+
+                    <div class="form-group col-md-6">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9"><?php echo $iss->getOption('label'); ?></label>
+                        <div class="input-icon">
+                            <i class="fa fa-bolt"></i>
+                            <?= $this->formElement($iss); ?>
+                            <?= $this->formElementErrors($iss); ?>
+                            <?php echo $iss->getOption('instructions'); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9"><?php echo $sub->getOption('label'); ?></label>
+                        <div class="input-icon">
+                            <i class="fa fa-user"></i>
+                            <?= $this->formElement($sub); ?>
+                            <?= $this->formElementErrors($sub); ?>
+                            <?php echo $sub->getOption('instructions'); ?>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9"><?php echo $aud->getOption('label'); ?></label>
+                        <div class="input-icon">
+                            <i class="fa fa-users"></i>
+                            <?= $this->formElement($aud); ?>
+                            <?= $this->formElementErrors($aud); ?>
+                            <?php echo $aud->getOption('instructions'); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9"><?php echo $exp->getOption('label'); ?></label>
+                        <div class="input-icon">
+                            <i class="fa fa-clock-o"></i>
+                            <?= $this->formElement($exp); ?>
+                            <?= $this->formElementErrors($exp); ?>
+                            <?php echo $exp->getOption('instructions'); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9"><?php echo $nbt->getOption('label'); ?></label>
+                        <div class="input-icon">
+                            <i class="fa fa-clock-o"></i>
+                            <?= $this->formElement($nbt); ?>
+                            <?= $this->formElementErrors($nbt); ?>
+                            <?php echo $nbt->getOption('instructions'); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9"><?php echo $jti->getOption('label'); ?></label>
+                        <div class="input-icon">
+                            <i class="fa fa-clock-o"></i>
+                            <?= $this->formElement($jti); ?>
+                            <?= $this->formElementErrors($jti); ?>
+                            <?php echo $jti->getOption('instructions'); ?>
+                        </div>
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn green pull-right">
+                            Create JWT <i class="m-icon-swapright m-icon-white"></i>
+                        </button>
+                    </div>
+
+                    <?= $this->form()->closeTag(); ?>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
