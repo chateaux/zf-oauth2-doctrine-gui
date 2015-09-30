@@ -5,7 +5,7 @@ namespace DoctrineGui\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 
 
-class FlashMessengerHelper extends AbstractHelper {
+class FlashMessageHelper extends AbstractHelper {
 
     public function __invoke()
     {
