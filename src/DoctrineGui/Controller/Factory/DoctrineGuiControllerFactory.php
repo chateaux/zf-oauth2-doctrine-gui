@@ -11,6 +11,7 @@ use DoctrineGui\Service\JwtService;
 use DoctrineGui\Service\ScopeService;
 use ZF\OAuth2\Doctrine\Adapter\DoctrineAdapter;
 use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DoctrineGuiControllerFactory implements FactoryInterface
 {
