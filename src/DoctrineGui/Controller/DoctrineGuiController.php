@@ -85,7 +85,8 @@ class DoctrineGuiController extends AbstractActionController
         {
             $pub_key = [];
             $array_copy = [];
-            $client_scopes = '';
+            $client_scopes = [];
+
             if ($clientObject instanceof Client)
             {
                 $jwtObject = $this->jwtService->findByClientId($clientObject);
@@ -421,7 +422,7 @@ class DoctrineGuiController extends AbstractActionController
                 $jwtObject = new Jwt();
                 $clientObject = $this->clientService->find($client_id);
                 $jwtObject->setClient($clientObject);
-               // $jwtObject->setSubject();    //@TODO Add the client id
+                // $jwtObject->setSubject();    //@TODO Add the client id
                 $this->jwtForm->bind($jwtObject);
             }
 
