@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\InputFilter;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use Zend\InputFilter\InputFilter;
 
 class ClientFilter extends InputFilter

@@ -11,11 +11,11 @@ namespace DoctrineGui\Form;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-class GenerateJwtForm extends Form
+class ScopeForm extends Form
 {
     public function __construct($name = null, $options = array())
     {
-        parent::__construct('generate-jwt-form', $options);
+        parent::__construct('scope-form', $options);
     }
 
     public function init()
@@ -27,10 +27,11 @@ class GenerateJwtForm extends Form
             ]
         );
 
+
         $this->add(
             [
-                'name' => 'jwt',
-                'type' => GenerateJwtFieldset::class,
+                'name' => 'scope',
+                'type' => ScopeFieldset::class,
                 'options' => [
                     'use_as_base_fieldset' => true
                 ]

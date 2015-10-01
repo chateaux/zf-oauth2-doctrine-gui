@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Service\Factory;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineGui\Service\AccessTokenService;
 use DoctrineGui\Service\ClientService;
 use DoctrineGui\Service\ScopeService;

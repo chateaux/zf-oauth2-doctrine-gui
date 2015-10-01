@@ -1,0 +1,120 @@
+<?php
+$this->layout('doctrine-gui/layout'); ?>
+
+<?=$this->FlashMessengerHelper();?>
+
+<div>
+    <div class="row profile-account">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div>
+                    <p>
+                       <h2>Current scopes</h2>
+                    </p>
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Scope</th>
+                                <th>Default</th>
+                                <th>Options</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                foreach ($scopes_array AS $scope ) {
+                            ?>
+                            <tr>
+                                <td><?=$scope['id'];?></td>
+                                <td><?=$scope['scope'];?></td>
+                                <td><?=($scope['isDefault'])?'Yes' : 'No';?></td>
+                                <td>
+                                    <p>
+                                        <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/scope-delete' , ['scope_id'=> $scope['id'] ]);?>">
+                                            <i class="fa fa-cloud"></i> Delete</a>
+
+                                        <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/scopes'   , ['scope_id'=> $scope['id'] ]);?>">
+                                            <i class="fa fa-cloud"></i> Edit</a>
+
+                                        <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/scope-toggle' , ['scope_id'=> $scope['id'] ]);?>">
+                                            <i class="fa fa-key"></i> Toggle default</a>
+
+                                    </p>
+                                </td>
+
+                            </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+
+            <h2>Add/Edit scope</h2>
+
+            <?php
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('zf-oauth-doctrine-gui/scopes' , [] , true) );
+            $form->setAttribute('class', 'form-horizontal form-bordered');
+            $form->setAttribute('method', 'post');
+            $form->get('submit')->setAttribute('class','btn-lg');
+
+            $form->get('submit')->setValue('Submit');
+            $form->prepare();
+
+            $csrf           = $form->get('csrfcheck');
+            $scopeForm      = $form->get('scope');
+            $id             = $scopeForm->get('id');
+            $scope          = $scopeForm->get('scope');
+            $default        = $scopeForm->get('isDefault');
+            $sub            = $form->get('submit');
+            ?>
+
+            <?= $this->form()->openTag($form); ?>
+            <?= $this->formElement($csrf); ?>
+            <?=$this->formElement($id); ?>
+            <div class="tab-content">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $scope->getOption('label'); ?></label>
+                    <div class="col-md-5">
+                        <div class="input-group" style="text-align:left">
+                            <?php echo '<div class="form-group">'.$this->formElement($scope).'</div>'; ?>
+                        </div>
+                        <div class="help-block">
+                            <?php echo $scope->getOption('instructions'); ?>
+                        </div>
+                        <?php if ( $this->formElementErrors($scope) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($scope).'</div>'; } ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $default->getOption('label'); ?></label>
+                    <div class="col-md-5">
+                        <div class="input-group" style="text-align:left">
+                            <?php echo '<div class="form-group">'.$this->formElement($default).'</div>'; ?>
+                        </div>
+                        <div class="help-block">
+                            <?php echo $default->getOption('instructions'); ?>
+                        </div>
+                        <?php if ( $this->formElementErrors($default) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($default).'</div>'; } ?>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group" style="text-align:left">
+                        <?php echo '<div class="form-group">'.$this->formElement($sub).'</div>'; ?>
+                    </div>
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+
+    </div>
+</div>

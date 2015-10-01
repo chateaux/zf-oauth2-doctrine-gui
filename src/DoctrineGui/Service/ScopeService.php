@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Service;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use ZF\OAuth2\Doctrine\Entity\Client;
@@ -96,5 +103,47 @@ class ScopeService
 
     }
 
+    /**
+     * @param $scope_id
+     * @return bool
+     * @throws \Exception
+     */
+    public function delete($scope_id)
+    {
+        $scopeObject = $this->find($scope_id);
+
+        if (!$scopeObject instanceof Scope)
+        {
+            return false;
+        }
+
+        try {
+            $this->objectManager->remove($scopeObject);
+            $this->objectManager->flush();
+            return true;
+        } catch (\Exception $e)
+        {
+            throw new \Exception($e);
+        }
+
+    }
+
+    /**
+     * @param $scope_id
+     * @return bool
+     */
+    public function toggle($scope_id)
+    {
+        $scopeObject = $this->find($scope_id);
+
+        if (!$scopeObject instanceof Scope)
+        {
+            return false;
+        }
+
+        $scopeObject->setIsDefault(!$scopeObject->getIsDefault());
+
+        $this->update($scopeObject);
+    }
 
 } 

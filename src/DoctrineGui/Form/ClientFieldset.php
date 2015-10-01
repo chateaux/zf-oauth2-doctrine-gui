@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Form;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\Form\Element;
@@ -103,9 +110,9 @@ class ClientFieldset extends Fieldset
                     'class' => 'form-control',
                     'options'  => [
                         'implicit' => 'implicit',
-//                        'authorization_code' => 'authorization_code',
-//                        'access_token' => 'access_token',
-//                        'refresh_token' => 'refresh_token',
+                        'authorization_code' => 'authorization_code',
+                        'access_token' => 'access_token',
+                        'refresh_token' => 'refresh_token',
                         'urn:ietf:params:oauth:grant-type:jwt-bearer' => 'urn:ietf:params:oauth:grant-type:jwt-bearer'
                     ],
                     'multiple' => true,

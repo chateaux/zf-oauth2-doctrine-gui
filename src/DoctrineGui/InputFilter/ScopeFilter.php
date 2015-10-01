@@ -10,7 +10,7 @@ namespace DoctrineGui\InputFilter;
 
 use Zend\InputFilter\InputFilter;
 
-class JwtFilter extends InputFilter
+class ScopeFilter extends InputFilter
 {
     function __construct() {
 
@@ -21,23 +21,16 @@ class JwtFilter extends InputFilter
         );
 
         $this->add( array(
-                'name'      => 'client',
+                'name'      => 'scope',
                 'required'  => true,
             )
         );
 
         $this->add( array(
-                'name'      => 'subject',
+                'name'      => 'isDefault',
                 'required'  => true,
             )
         );
-
-        $this->add( array(
-                'name'      => 'publicKey',
-                'required'  => true,
-            )
-        );
-
 
     }
 

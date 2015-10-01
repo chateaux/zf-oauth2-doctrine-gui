@@ -8,13 +8,13 @@ namespace DoctrineGui\Form\Factory;
  *
  */
 
-use DoctrineGui\Form\ClientForm;
-use DoctrineGui\InputFilter\ClientFilter;
+use DoctrineGui\Form\ScopeForm;
+use DoctrineGui\InputFilter\ScopeFilter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 
-class ClientFormFactory implements FactoryInterface
+class ScopeFormFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -24,8 +24,8 @@ class ClientFormFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ClientForm(
-            $serviceLocator->getServiceLocator()->get('InputFilterManager')->get(ClientFilter::class)
+        return new ScopeForm(
+            $serviceLocator->getServiceLocator()->get('InputFilterManager')->get(ScopeFilter::class)
         );
     }
 }

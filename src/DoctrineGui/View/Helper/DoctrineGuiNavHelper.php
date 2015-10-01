@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\View\Helper;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use Zend\View\Helper\AbstractHelper;
 
 class DoctrineGuiNavHelper extends AbstractHelper

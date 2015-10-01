@@ -34,6 +34,7 @@
 
         $active['overview'] = '';
         $active['clients']  = '';
+        $active['scopes']   = '';
 
         if ( $child === 'overview')
         {
@@ -44,6 +45,12 @@
         {
             $active['clients'] = 'active';
         }
+
+        if ( $child === 'scopes')
+        {
+            $active['scopes'] = 'active';
+        }
+
         ?>
 
     </head>
@@ -62,6 +69,7 @@
                     <ul class="nav navbar-nav">
                         <li class="<?=$active['overview']?>"><a href="<?php echo $this->url('zf-oauth-doctrine-gui/overview') ?>"><?php echo $this->translate('Overview') ?></a></li>
                         <li class="<?=$active['clients']?>"><a href="<?php echo $this->url('zf-oauth-doctrine-gui/clients') ?>"><?php echo $this->translate('Clients') ?></a></li>
+                        <li class="<?=$active['scopes']?>"><a href="<?php echo $this->url('zf-oauth-doctrine-gui/scopes') ?>"><?php echo $this->translate('Scopes') ?></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -70,7 +78,7 @@
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+                <p>Author: <a href="http://www.southeasterdesign.com" target="_blank">www.southeasterdesign.com</a> find on GitHub: <a href="https://github.com/API-Skeletons/zf-oauth2-doctrine-gui">Zf OAuth Doctrine Gui</a></p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>

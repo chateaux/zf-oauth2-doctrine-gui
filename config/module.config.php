@@ -1,7 +1,17 @@
 <?php
 namespace DoctrineGui;
+/**
+ * Doctrine Gui
+ *
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
 
 use DoctrineGui\Form\Factory\GenerateJwtFieldsetFactory;
+use DoctrineGui\Form\Factory\ScopeFieldsetFactory;
+use DoctrineGui\Form\Factory\ScopeFormFactory;
 use DoctrineGui\Form\GenerateJwtFieldset;
 use DoctrineGui\Controller\DoctrineGuiController;
 use DoctrineGui\Controller\Factory\DoctrineGuiControllerFactory;
@@ -13,6 +23,8 @@ use DoctrineGui\Form\Factory\JwtFieldsetFactory;
 use DoctrineGui\Form\Factory\JwtFormFactory;
 use DoctrineGui\Form\JwtFieldset;
 use DoctrineGui\Form\JwtForm;
+use DoctrineGui\Form\ScopeFieldset;
+use DoctrineGui\Form\ScopeForm;
 use DoctrineGui\InputFilter\ClientFilter;
 use DoctrineGui\InputFilter\JwtFilter;
 use DoctrineGui\Service\AccessTokenService;
@@ -46,7 +58,9 @@ return [
             ClientFieldset::class => ClientFieldsetFactory::class,
             JwtFieldset::class => JwtFieldsetFactory::class,
             JwtForm::class => JwtFormFactory::class,
-            GenerateJwtFieldset::class => GenerateJwtFieldsetFactory::class
+            GenerateJwtFieldset::class => GenerateJwtFieldsetFactory::class,
+            ScopeFieldset::class => ScopeFieldsetFactory::class,
+            ScopeForm::class => ScopeFormFactory::class
         ]
     ],
     'input_filters'      => [
@@ -57,8 +71,8 @@ return [
     ],
     'view_helpers'  => [
         'invokables'    => [
-            'FlashMessageHelper'  => FlashMessageHelper::class,
-            'DoctrineGuiNavHelper'  => DoctrineGuiNavHelper::class
+            'FlashMessageHelper'   => FlashMessageHelper::class,
+            'DoctrineGuiNavHelper' => DoctrineGuiNavHelper::class
         ]
     ],
     'view_helper_config' => [
@@ -77,6 +91,7 @@ return [
             'doctrine-gui/doctrine-gui/test-jwt'       => __DIR__ . '/../view/test-jwt.phtml',
             'doctrine-gui/doctrine-gui/client-manage'  => __DIR__ . '/../view/client-manage.phtml',
             'doctrine-gui/doctrine-gui/manage-key'     => __DIR__ . '/../view/manage-key.phtml',
+            'doctrine-gui/doctrine-gui/scopes'         => __DIR__ . '/../view/scopes.phtml',
             'doctrine-gui/layout'                      => __DIR__ . '/../view/layout/layout.phtml',
         ]
     ],
@@ -123,6 +138,45 @@ return [
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
                                 'action'     => 'clients',
+                            ],
+                        ]
+                    ],
+                    'scopes' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/scopes[/:scope_id]',
+                            'constraints' => [
+                                'scope_id' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                'controller' => DoctrineGuiController::class,
+                                'action'     => 'scopes',
+                            ],
+                        ]
+                    ],
+                    'scope-delete' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/scope-delete/:scope_id',
+                            'constraints' => [
+                                'scope_id' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                'controller' => DoctrineGuiController::class,
+                                'action'     => 'scope-delete',
+                            ],
+                        ]
+                    ],
+                    'scope-toggle' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/scope-toggle/:scope_id',
+                            'constraints' => [
+                                'scope_id' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                'controller' => DoctrineGuiController::class,
+                                'action'     => 'scope-toggle',
                             ],
                         ]
                     ],

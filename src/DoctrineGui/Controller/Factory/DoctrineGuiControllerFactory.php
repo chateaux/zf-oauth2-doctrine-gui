@@ -1,10 +1,18 @@
 <?php
 namespace DoctrineGui\Controller\Factory;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineGui\Controller\DoctrineGuiController;
 use DoctrineGui\Form\ClientForm;
 use DoctrineGui\Form\GenerateJwtForm;
 use DoctrineGui\Form\JwtForm;
+use DoctrineGui\Form\ScopeForm;
 use DoctrineGui\Service\AccessTokenService;
 use DoctrineGui\Service\ClientService;
 use DoctrineGui\Service\JwtService;
@@ -33,7 +41,8 @@ class DoctrineGuiControllerFactory implements FactoryInterface
             $realSl->get(DoctrineAdapter::class),
             $realSl->get('FormElementManager')->get(ClientForm::class),
             $realSl->get('FormElementManager')->get(JwtForm::class),
-            $realSl->get('FormElementManager')->get(GenerateJwtForm::class)
+            $realSl->get('FormElementManager')->get(GenerateJwtForm::class),
+            $realSl->get('FormElementManager')->get(ScopeForm::class)
         );
     }
 }
