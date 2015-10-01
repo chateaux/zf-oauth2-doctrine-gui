@@ -1,0 +1,48 @@
+<?php
+$this->layout('doctrine-gui/layout');
+?>
+<?php
+$this->FlashMessengerHelper();
+?>
+<div>
+    <div class="row profile-account">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div>
+
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Game</th>
+                                <th>How it works</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                foreach ($games_array AS $game_id => $row) {
+                            ?>
+                            <tr>
+                                <td>
+                                    <?=$row['name'];?><br/>
+                                    <b>Game Code:</b> <?=$row['game_code'];?>
+                                </td>
+                                <td>
+                                    <b>Description:</b> <?=$row['description'];?><br/>
+                                    <?=$row['how_it_works'];?>
+                                </td>
+                            </tr>
+
+                            </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

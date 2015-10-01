@@ -1,0 +1,103 @@
+<?php
+$this->layout('doctrine-gui/layout');
+?>
+<?php
+$this->FlashMessengerHelper();
+?>
+<div>
+    <div class="row profile-account">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div>
+                    <p>
+                        NOTE: Changing a client in use could cause it to stop working...
+                    </p>
+
+                    <div class="col-md-12">
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet box grey">
+
+
+                            <div class="portlet-body form">
+                                <!-- BEGIN FORM-->
+
+                                <div class="portlet-body form">
+                                    <?php
+                                    $form = $this->form;
+                                    $form->setAttribute('action', $this->url('zf-oauth-doctrine-gui/manage-key', ['jwt_id' => $jwt_id], true) );
+                                    $form->setAttribute('class', 'form-horizontal form-bordered');
+                                    $form->setAttribute('method', 'post');
+
+                                    $form->get('submit')->setValue('Submit');
+                                    $form->get('submit')->setAttribute('class','btn green');
+                                    $form->prepare();
+
+                                    $csrf           = $form->get('csrfcheck');
+                                    $formublisher   = $form->get('jwt');
+                                    $id             = $formublisher->get('id');
+                                    $clientId       = $formublisher->get('client');
+                                    $subject        = $formublisher->get('subject');
+                                    $key            = $formublisher->get('publicKey');
+                                    $sub            = $form->get('submit');
+                                    ?>
+
+                                    <?= $this->form()->openTag($form); ?>
+
+                                    <?= $this->formElement($csrf); ?>
+                                    <div class='form-body'>
+
+                                        <?=$this->formElement($id); ?>
+                                        <?=$this->formElement($clientId); ?>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $subject->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($subject).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $subject->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($subject) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($subject).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $key->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($key).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $key->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($key) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($key).'</div>'; } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?= $this->formElement($sub); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <?= $this->form()->closeTag(); ?>
+                                    <!-- END FORM-->
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
