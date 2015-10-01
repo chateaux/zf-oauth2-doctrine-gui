@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Form\Factory;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineGui\Form\JwtForm;
 use DoctrineGui\InputFilter\JwtFilter;
 use Zend\ServiceManager\FactoryInterface;

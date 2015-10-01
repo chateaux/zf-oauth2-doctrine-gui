@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 namespace DoctrineGui\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;

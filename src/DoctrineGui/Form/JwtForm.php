@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Form;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterInterface;

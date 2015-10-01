@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Form;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineGui\Form\View\Helper\MyObjectHidden;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;

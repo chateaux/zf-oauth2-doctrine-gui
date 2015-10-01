@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Service\Factory;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineGui\Service\ClientService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

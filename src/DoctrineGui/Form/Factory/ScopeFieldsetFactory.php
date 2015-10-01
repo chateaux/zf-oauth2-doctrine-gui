@@ -1,5 +1,5 @@
 <?php
-namespace DoctrineGui\Service\Factory;
+namespace DoctrineGui\Form\Factory;
 
 /**
  * @author Brendan <b.nash at southeaster dot com>
@@ -8,12 +8,12 @@ namespace DoctrineGui\Service\Factory;
  *
  */
 
-use DoctrineGui\Service\ScopeService;
+use DoctrineGui\Form\ScopeFieldset;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZF\OAuth2\Doctrine\Entity\Scope;
 
-class ScopeServiceFactory implements FactoryInterface
+class ScopeFieldsetFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -23,11 +23,12 @@ class ScopeServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $objectManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
 
-        return new ScopeService(
-            $objectManager,
-            $objectManager->getRepository(Scope::class)
+        $realSl = $serviceLocator->getServiceLocator();
+
+        return new ScopeFieldset(
+            $realSl->get('Doctrine\ORM\EntityManager'),
+            new Scope()
         );
     }
-}
+} 

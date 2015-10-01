@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Form\View\Helper;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineModule\Form\Element\Proxy;
 use Zend\Form\Element\Hidden as HiddenElement;
 use Zend\Form\Form;

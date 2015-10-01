@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Service;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use ZF\OAuth2\Doctrine\Entity\Client;

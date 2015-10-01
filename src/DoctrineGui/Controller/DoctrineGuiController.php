@@ -1,6 +1,13 @@
 <?php
 namespace DoctrineGui\Controller;
 
+/**
+ * @author Brendan <b.nash at southeaster dot com>
+ *
+ * @Contributors:
+ *
+ */
+
 use DoctrineGui\Service\AccessTokenService;
 use DoctrineGui\Service\ClientService;
 use DoctrineGui\Service\JwtService;
@@ -14,7 +21,7 @@ use ZF\OAuth2\Doctrine\Adapter\DoctrineAdapter;
 use ZF\OAuth2\Doctrine\Entity\Client;
 use ZF\OAuth2\Doctrine\Entity\Jwt;
 use ZF\OAuth2\Client\Service\Jwt as JwtClient;
-use ZfcRbac\Service\AuthorizationService;
+use ZF\OAuth2\Doctrine\Entity\Scope;
 
 class DoctrineGuiController extends AbstractActionController
 {
@@ -28,6 +35,7 @@ class DoctrineGuiController extends AbstractActionController
      * @param FormInterface $clientForm
      * @param FormInterface $jwtForm
      * @param FormInterface $generateJwtForm
+     * @param FormInterface $scopeForm
      */
     public function __construct(
         ClientService          $clientService,
@@ -37,7 +45,8 @@ class DoctrineGuiController extends AbstractActionController
         DoctrineAdapter        $doctrineAdapter,
         FormInterface          $clientForm,
         FormInterface          $jwtForm,
-        FormInterface          $generateJwtForm
+        FormInterface          $generateJwtForm,
+        FormInterface          $scopeForm
 
     ) {
         $this->clientService   = $clientService;
@@ -47,7 +56,8 @@ class DoctrineGuiController extends AbstractActionController
         $this->doctrinAdapter  = $doctrineAdapter;
         $this->clientForm      = $clientForm;
         $this->jwtForm         = $jwtForm;
-        $this->testJwtForm = $generateJwtForm;
+        $this->testJwtForm     = $generateJwtForm;
+        $this->scopeForm       = $scopeForm;
     }
 
     /**
@@ -115,6 +125,135 @@ class DoctrineGuiController extends AbstractActionController
                 'client_array' => $client_array
             ]
         );
+
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function scopesAction()
+    {
+
+        $scope_id = $this->params()->fromRoute('scope_id',0);
+
+        $scopes = $this->scopeService->findAll();
+        $scopes_array = [];
+
+        foreach ($scopes AS $scopeObject)
+        {
+            $scopes_array[] = $scopeObject->getArrayCopy();
+        }
+
+        $prg = $this->prg();
+
+        if ( $prg instanceof Response ) {
+            return $prg;
+        } elseif ($prg === false) {
+
+            if ($scope_id != 0)
+            {
+                $scopeObject = $this->scopeService->find($scope_id);
+
+            } else {
+                $scopeObject = new Scope();
+            }
+
+            $this->scopeForm->bind($scopeObject);
+
+            return new ViewModel( array( 'scopes_array' => $scopes_array , 'form' => $this->scopeForm ) );
+
+        }
+
+        $this->scopeForm->setData($prg);
+
+        if ( ! $this->scopeForm->isValid() ) {
+
+            return new ViewModel( array( 'scopes_array' => $scopes_array , 'form' => $this->scopeForm ) );
+        }
+
+        /**
+         * Test for pre-existing scope
+         */
+        if ($scope_id == 0)
+        {
+            $testScope = $this->scopeService->findByName($prg['scope']['scope']);
+
+            if ($testScope instanceof Scope)
+            {
+                $this->flashMessenger()->addErrorMessage(
+                    'The scope "'.$prg['scope']['scope'].'" exists, please choose another scope name'
+                );
+
+                return $this->redirect()->toRoute('zf-oauth-doctrine-gui/scopes');
+            }
+
+        }
+
+        $scopeObject = $this->scopeForm->getData();
+
+        $this->scopeService->update($scopeObject);
+
+        $message = ($scope_id == 0) ? 'The scope "'.$prg['scope']['scope'].'" has been added' : 'The scope "'.$prg['scope']['scope'].'" has been updated';
+
+        $this->flashMessenger()->addSuccessMessage($message);
+
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/scopes');
+
+
+
+    }
+
+    /**
+     * Removes scopes
+     * @return Response
+     */
+    public function scopeDeleteAction()
+    {
+        $scope_id = $this->params()->fromRoute('scope_id',false);
+
+        if (!$scope_id)
+        {
+            $this->flashMessenger()->addErrorMessage(
+                'Invalid scope identity'
+            );
+
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/scopes');
+        }
+
+        $this->scopeService->delete($scope_id);
+
+        $this->flashMessenger()->addSuccessMessage(
+            'Scope deleted'
+        );
+
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/scopes');
+
+    }
+
+    /**
+     * Toggle default settings
+     * @return Response
+     */
+    public function scopeToggleAction()
+    {
+        $scope_id = $this->params()->fromRoute('scope_id',false);
+
+        if (!$scope_id)
+        {
+            $this->flashMessenger()->addErrorMessage(
+                'Invalid scope identity'
+            );
+
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/scopes');
+        }
+
+        $this->scopeService->toggle($scope_id);
+
+        $this->flashMessenger()->addSuccessMessage(
+            'Scope default toggled'
+        );
+
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/scopes');
 
     }
 
