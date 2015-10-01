@@ -41,6 +41,15 @@ class ClientService
     }
 
     /**
+     * Return all the clients
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->clientRepository->findAll();
+    }
+
+    /**
      * Find by the associated user id
      * @param $user_id
      * @return object

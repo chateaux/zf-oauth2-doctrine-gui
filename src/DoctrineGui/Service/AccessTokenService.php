@@ -43,7 +43,7 @@ class AccessTokenService
      */
     public function findByClient($client_id)
     {
-        return $this->accessTokenRepository->findBy(array('client_id' => $client_id));
+        return $this->accessTokenRepository->findBy(array('client' => $client_id));
     }
 
     /**

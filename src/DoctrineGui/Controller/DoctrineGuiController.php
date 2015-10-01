@@ -57,7 +57,7 @@ class DoctrineGuiController extends AbstractActionController
     public function overviewAction()
     {
 
-
+        return new ViewModel([]);
     }
 
     /**
@@ -67,7 +67,7 @@ class DoctrineGuiController extends AbstractActionController
     public function clientsAction()
     {
 
-        $client_object_array = $this->clientService->find();
+        $client_object_array = $this->clientService->findAll();
 
         $client_array = [];
 
@@ -92,7 +92,13 @@ class DoctrineGuiController extends AbstractActionController
 
                 $array_copy = $clientObject->getArrayCopy();
 
-                $client_scopes = $clientObject->getScope();
+                $persistentCollection = $clientObject->getScope();
+                $scopes = $persistentCollection->getValues();
+
+                foreach ($scopes AS $scopeObject)
+                {
+                    $client_scopes[] = $scopeObject->getScope();
+                }
 
             }
 
@@ -104,12 +110,9 @@ class DoctrineGuiController extends AbstractActionController
 
         }
 
-        $app_url = $this->applicationSettings->getSettings('app_url');
-
         return new ViewModel(
             [
-                'client_array' => $client_array,
-                'app_url' => $app_url
+                'client_array' => $client_array
             ]
         );
 
@@ -165,7 +168,7 @@ class DoctrineGuiController extends AbstractActionController
                     'Passwords do not match'
                 );
 
-                return $this->redirect()->toRoute('developer/client-manage' , ['client_id' => $client_id]);
+                return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
             } else {
                 $new_password = $prg['client']['password'];
             }
@@ -184,7 +187,7 @@ class DoctrineGuiController extends AbstractActionController
                     'The client '.$prg['client']['clientId'].' exists, please choose another client name'
                 );
 
-                return $this->redirect()->toRoute('developer/client-manage' , ['client_id' => $client_id]);
+                return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
             }
 
             /**
@@ -196,7 +199,7 @@ class DoctrineGuiController extends AbstractActionController
                     'Please set the password'
                 );
 
-                return $this->redirect()->toRoute('developer/client-manage' , ['client_id' => $client_id]);
+                return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
             }
 
         }
@@ -235,14 +238,14 @@ class DoctrineGuiController extends AbstractActionController
                 'Error updating the client'
             );
 
-            return $this->redirect()->toRoute('developer/client-manage' , ['client_id' => $client_id]);
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
         }
 
         $this->flashMessenger()->addSuccessMessage(
             'Client updated'
         );
 
-        return $this->redirect()->toRoute('developer/clients');
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
     }
 
     /**
@@ -262,7 +265,7 @@ class DoctrineGuiController extends AbstractActionController
                 'You have a pre-existing public key for this client, either delete the key then add a new one or edit the current key.'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
         $prg = $this->prg();
@@ -279,7 +282,7 @@ class DoctrineGuiController extends AbstractActionController
                 $jwtObject = new Jwt();
                 $clientObject = $this->clientService->find($client_id);
                 $jwtObject->setClient($clientObject);
-                $jwtObject->setSubject();    //@TODO Add the client id
+               // $jwtObject->setSubject();    //@TODO Add the client id
                 $this->jwtForm->bind($jwtObject);
             }
 
@@ -304,14 +307,14 @@ class DoctrineGuiController extends AbstractActionController
                 'Unable to save the jwt object'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
         $this->flashMessenger()->addSuccessMessage(
             'Client updated'
         );
 
-        return $this->redirect()->toRoute('developer/clients');
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
 
     }
 
@@ -330,7 +333,7 @@ class DoctrineGuiController extends AbstractActionController
                 'Missing key'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
 
@@ -343,14 +346,14 @@ class DoctrineGuiController extends AbstractActionController
                 'Unable to delete Key'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
         $this->flashMessenger()->addSuccessMessage(
             'Key deleted'
         );
 
-        return $this->redirect()->toRoute('developer/clients');
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
 
 
     }
@@ -382,12 +385,22 @@ class DoctrineGuiController extends AbstractActionController
         if (!empty($jwtObject))
         {
             $this->flashMessenger()->addErrorMessage(
-                'Remove the client keys before deleting the client'
+                'You must first remove the public key before deleting the client'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
+        /**
+         * Check for AccessTokens
+         */
+
+        $tokens = $this->accessTokenService->findByClient($client_id);
+
+        foreach ($tokens AS $accessToken)
+        {
+            $this->accessTokenService->delete($accessToken);
+        }
 
         $result = $this->clientService->delete($client_id);
 
@@ -397,14 +410,14 @@ class DoctrineGuiController extends AbstractActionController
                 'Unable to delete client'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
         $this->flashMessenger()->addSuccessMessage(
             'Client deleted'
         );
 
-        return $this->redirect()->toRoute('developer/clients');
+        return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
 
 
     }
@@ -422,17 +435,13 @@ class DoctrineGuiController extends AbstractActionController
         $jwtObject = $this->jwtService->find($jwt_id);
         $clientObject = $this->clientService->find($client_id);
 
-        if ( ! $this->authService->hasIdentity() ) {
-            return $this->redirect()->toRoute('customer/login');
-        }
-
         if ( ! $clientObject instanceof Client )
         {
             $this->flashMessenger()->addErrorMessage(
                 'Missing client object'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
         if ( ! $jwtObject instanceof Jwt )
@@ -441,7 +450,7 @@ class DoctrineGuiController extends AbstractActionController
                 'Missing jwt object'
             );
 
-            return $this->redirect()->toRoute('developer/clients');
+            return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
         $jwt_array = [
@@ -465,14 +474,14 @@ class DoctrineGuiController extends AbstractActionController
             );
         }
 
-        $privateKey = $prg['privkey'];
+        $privateKey = $prg['jwt']['privkey'];
 
-        $iss = $prg['iss'];
-        $sub = $prg['sub'];
-        $aud = $prg['aud'];
-        $exp = $prg['exp'];
-        $nbf = $prg['nbt'];
-        $jti = $prg['jti'];
+        $iss = $prg['jwt']['iss'];
+        $sub = $prg['jwt']['sub'];
+        $aud = $prg['jwt']['aud'];
+        $exp = $prg['jwt']['exp'];
+        $nbf = $prg['jwt']['nbt'];
+        $jti = $prg['jwt']['jti'];
 
         $jwtService = new JwtClient();
 

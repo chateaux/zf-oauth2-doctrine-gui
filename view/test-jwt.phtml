@@ -1,21 +1,27 @@
 <?php
+$this->layout('doctrine-gui/layout');
+?>
+
+<?php
 $this->FlashMessengerHelper();
 
 $form = $this->form;
-$form->setAttribute('action', $this->url('developer/test-jwt' , [ 'jwt_id' => $jwt_id , 'client_id' => $client_id ]));
+$form->setAttribute('action', $this->url('zf-oauth-doctrine-gui/test-jwt' , [ 'jwt_id' => $jwt_id , 'client_id' => $client_id ]));
 $form->setAttribute('class', 'form');
 $form->prepare();
 
 $csrf = $form->get('csrfcheck');
-$iss  = $form->get('iss');
+$jwtFieldset  = $form->get('jwt');
+
+$iss  = $jwtFieldset->get('iss');
 $iss->setValue($this->jwt_array['issuer']);
-$sub  = $form->get('sub');
+$sub  = $jwtFieldset->get('sub');
 $sub->setValue($this->jwt_array['subject']);
-$aud  = $form->get('aud');
-$exp  = $form->get('exp');
-$nbt  = $form->get('nbt');
-$jti  = $form->get('jti');
-$privkey = $form->get('privkey');
+$aud  = $jwtFieldset->get('aud');
+$exp  = $jwtFieldset->get('exp');
+$nbt  = $jwtFieldset->get('nbt');
+$jti  = $jwtFieldset->get('jti');
+$privkey = $jwtFieldset->get('privkey');
 
 $submit  = $form->get('submit');
 ?>
@@ -25,17 +31,16 @@ $submit  = $form->get('submit');
         <div class="col-md-12">
             <div class="tab-content">
                 <div>
-                    <?=$this->DoctrinGuiNavHelper();?>
-                    <p>Use this section to create a test JWT web token. Once you have a token, use it in PostMan to obtain a Bearer token.</p>
+                    <p>Copy a test private key into the private key section matching the respective public key of the client and click on the "create JWT" button.</p>
 
                     <div class="col-md-12">
 
-                    <!-- BEGIN LOGIN FORM -->
-                    <?= $this->form()->openTag($form);  ?>
-                    <h3 class="form-title">Generate a new Jason Web Token</h3>
+                        <!-- BEGIN LOGIN FORM -->
+                        <?= $this->form()->openTag($form);  ?>
+                        <h3 class="form-title">Generate a new Jason Web Token</h3>
 
-                    <?= $this->formElement($csrf); ?>
-                    <?= $this->formElementErrors($csrf); ?>
+                        <?= $this->formElement($csrf); ?>
+                        <?= $this->formElementErrors($csrf); ?>
 
                         <div class="form-group">
                             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -55,81 +60,80 @@ $submit  = $form->get('submit');
                             </div>
                         </div>
 
-                    <div class="form-group col-md-6">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9"><?php echo $iss->getOption('label'); ?></label>
-                        <div class="input-icon">
-                            <i class="fa fa-bolt"></i>
-                            <?= $this->formElement($iss); ?>
-                            <?= $this->formElementErrors($iss); ?>
-                            <?php echo $iss->getOption('instructions'); ?>
+                        <div class="form-group col-md-6">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $iss->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <i class="fa fa-bolt"></i>
+                                <?= $this->formElement($iss); ?>
+                                <?= $this->formElementErrors($iss); ?>
+                                <?php echo $iss->getOption('instructions'); ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group col-md-6">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9"><?php echo $sub->getOption('label'); ?></label>
-                        <div class="input-icon">
-                            <i class="fa fa-user"></i>
-                            <?= $this->formElement($sub); ?>
-                            <?= $this->formElementErrors($sub); ?>
-                            <?php echo $sub->getOption('instructions'); ?>
+                        <div class="form-group col-md-6">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $sub->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <i class="fa fa-user"></i>
+                                <?= $this->formElement($sub); ?>
+                                <?= $this->formElementErrors($sub); ?>
+                                <?php echo $sub->getOption('instructions'); ?>
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="form-group col-md-6">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9"><?php echo $aud->getOption('label'); ?></label>
-                        <div class="input-icon">
-                            <i class="fa fa-users"></i>
-                            <?= $this->formElement($aud); ?>
-                            <?= $this->formElementErrors($aud); ?>
-                            <?php echo $aud->getOption('instructions'); ?>
+                        <div class="form-group col-md-6">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $aud->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <i class="fa fa-users"></i>
+                                <?= $this->formElement($aud); ?>
+                                <?= $this->formElementErrors($aud); ?>
+                                <?php echo $aud->getOption('instructions'); ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group col-md-6">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9"><?php echo $exp->getOption('label'); ?></label>
-                        <div class="input-icon">
-                            <i class="fa fa-clock-o"></i>
-                            <?= $this->formElement($exp); ?>
-                            <?= $this->formElementErrors($exp); ?>
-                            <?php echo $exp->getOption('instructions'); ?>
+                        <div class="form-group col-md-6">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $exp->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <i class="fa fa-clock-o"></i>
+                                <?= $this->formElement($exp); ?>
+                                <?= $this->formElementErrors($exp); ?>
+                                <?php echo $exp->getOption('instructions'); ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group col-md-6">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9"><?php echo $nbt->getOption('label'); ?></label>
-                        <div class="input-icon">
-                            <i class="fa fa-clock-o"></i>
-                            <?= $this->formElement($nbt); ?>
-                            <?= $this->formElementErrors($nbt); ?>
-                            <?php echo $nbt->getOption('instructions'); ?>
+                        <div class="form-group col-md-6">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $nbt->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <i class="fa fa-clock-o"></i>
+                                <?= $this->formElement($nbt); ?>
+                                <?= $this->formElementErrors($nbt); ?>
+                                <?php echo $nbt->getOption('instructions'); ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group col-md-6">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9"><?php echo $jti->getOption('label'); ?></label>
-                        <div class="input-icon">
-                            <i class="fa fa-clock-o"></i>
-                            <?= $this->formElement($jti); ?>
-                            <?= $this->formElementErrors($jti); ?>
-                            <?php echo $jti->getOption('instructions'); ?>
+                        <div class="form-group col-md-6">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9"><?php echo $jti->getOption('label'); ?></label>
+                            <div class="input-icon">
+                                <i class="fa fa-clock-o"></i>
+                                <?= $this->formElement($jti); ?>
+                                <?= $this->formElementErrors($jti); ?>
+                                <?php echo $jti->getOption('instructions'); ?>
+                            </div>
                         </div>
-                    </div>
 
+                        <div class="form-actions">
+                            <button type="submit" class="btn green pull-right">
+                                Create JWT <i class="m-icon-swapright m-icon-white"></i>
+                            </button>
+                        </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn green pull-right">
-                            Create JWT <i class="m-icon-swapright m-icon-white"></i>
-                        </button>
-                    </div>
-
-                    <?= $this->form()->closeTag(); ?>
+                        <?= $this->form()->closeTag(); ?>
 
                     </div>
 

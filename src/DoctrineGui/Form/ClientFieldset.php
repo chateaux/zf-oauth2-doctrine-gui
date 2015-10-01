@@ -112,7 +112,7 @@ class ClientFieldset extends Fieldset
                 ],
                 'options' => [
                     'label' => 'Grant type',
-                    'instructions' => 'Enter the grant type required for this client. Implicit for SSO and urn:ietf... for Json Web Tokens (required for your server to talk to the payment system)'
+                    'instructions' => 'Enter the grant type required for this client. Implicit for SSO and urn:ietf... for Json Web Tokens (server to server)'
                 ],
             ]);
 
@@ -125,9 +125,7 @@ class ClientFieldset extends Fieldset
                     'target_class'   => 'ZF\OAuth2\Doctrine\Entity\Scope',
                     'property'       => 'scope',
                     'label' => 'Scope',
-                    'instructions' => 'Scope is used to determine the access level of your client.
-                     Basic allows the client access to basic user information which is returned with an implicit bearer token. To offer transfers, registration and server side login
-                     you will require a client with urn... grant type and the appropriate scopes.'
+                    'instructions' => 'Scope is used to limit access of a client. It is advisable to create scopes and to check the inbound clients scope level before authorising access to your API end point.'
                 ],
                 'attributes' => [
                     'required' => 'required',

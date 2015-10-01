@@ -1,4 +1,7 @@
 <?php
+$this->layout('doctrine-gui/layout');
+?>
+<?php
 $this->FlashMessengerHelper();
 ?>
 <div>
@@ -6,9 +9,8 @@ $this->FlashMessengerHelper();
         <div class="col-md-12">
             <div class="tab-content">
                 <div>
-                    <?=$this->DoctrinGuiNavHelper();?>
                     <p>
-                        NOTE: Changing your key may cause your game to stop working. Make sure you only copy the key and not the cutting lines etc.
+                        NOTE: Changing a client in use could cause it to stop working...
                     </p>
 
                     <div class="col-md-12">
@@ -22,7 +24,7 @@ $this->FlashMessengerHelper();
                                 <div class="portlet-body form">
                                     <?php
                                     $form = $this->form;
-                                    $form->setAttribute('action', $this->url('developer/manage-key', ['jwt_id' => $jwt_id], true) );
+                                    $form->setAttribute('action', $this->url('zf-oauth-doctrine-gui/manage-key', ['jwt_id' => $jwt_id], true) );
                                     $form->setAttribute('class', 'form-horizontal form-bordered');
                                     $form->setAttribute('method', 'post');
 
@@ -46,7 +48,19 @@ $this->FlashMessengerHelper();
 
                                         <?=$this->formElement($id); ?>
                                         <?=$this->formElement($clientId); ?>
-                                        <?=$this->formElement($subject); ?>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $subject->getOption('label'); ?></label>
+                                            <div class="col-md-5">
+                                                <div class="input-group" style="text-align:left">
+                                                    <?php echo '<div class="form-group">'.$this->formElement($subject).'</div>'; ?>
+                                                </div>
+                                                <div class="help-block">
+                                                    <?php echo $subject->getOption('instructions'); ?>
+                                                </div>
+                                                <?php if ( $this->formElementErrors($subject) != '') { echo '<div class="alert alert-danger">'.$this->formElementErrors($subject).'</div>'; } ?>
+                                            </div>
+                                        </div>
 
                                         <div class="form-group">
                                             <label class="control-label col-md-3"><?php echo $key->getOption('label'); ?></label>

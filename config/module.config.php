@@ -1,7 +1,7 @@
 <?php
 namespace DoctrineGui;
 
-use Developer\Form\Factory\GenerateJwtFieldsetFactory;
+use DoctrineGui\Form\Factory\GenerateJwtFieldsetFactory;
 use DoctrineGui\Form\GenerateJwtFieldset;
 use DoctrineGui\Controller\DoctrineGuiController;
 use DoctrineGui\Controller\Factory\DoctrineGuiControllerFactory;
@@ -72,11 +72,12 @@ return [
     'view_manager'       => [
         'template_map' => [
             'doctrine-gui/doctrine-gui/overview'       => __DIR__ . '/../view/overview.phtml',
-            'doctrine-gui/doctrine-gui//games'         => __DIR__ . '/../view/games.phtml',
-            'doctrine-gui/doctrine-gui//clients'       => __DIR__ . '/../view/clients.phtml',
-            'doctrine-gui/doctrine-gui//test-jwt'      => __DIR__ . '/../view/test-jwt.phtml',
+            'doctrine-gui/doctrine-gui/games'          => __DIR__ . '/../view/games.phtml',
+            'doctrine-gui/doctrine-gui/clients'        => __DIR__ . '/../view/clients.phtml',
+            'doctrine-gui/doctrine-gui/test-jwt'       => __DIR__ . '/../view/test-jwt.phtml',
             'doctrine-gui/doctrine-gui/client-manage'  => __DIR__ . '/../view/client-manage.phtml',
-            'doctrine-gui/doctrine-gui//manage-key'    => __DIR__ . '/../view/manage-key.phtml',
+            'doctrine-gui/doctrine-gui/manage-key'     => __DIR__ . '/../view/manage-key.phtml',
+            'doctrine-gui/layout'                      => __DIR__ . '/../view/layout/layout.phtml',
         ]
     ],
     'asset_manager' => [

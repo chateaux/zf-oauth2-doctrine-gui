@@ -1,7 +1,7 @@
 <?php
-namespace Developer\Form\Factory;
+namespace DoctrineGui\Form\Factory;
 
-use Developer\Form\GenerateJwtFieldset;
+use DoctrineGui\Form\GenerateJwtFieldset;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZF\OAuth2\Doctrine\Entity\Jwt;

@@ -63,7 +63,13 @@ class JwtFieldset extends Fieldset
         $this->add(
             [
                 'name'       => 'subject',
-                'type'       => 'hidden',
+                'type'       => 'text',
+                'options'    => [
+                    'label' => 'Subject',
+                    'instructions' => 'This is typically a user_id (it can be an admin user_id, or the user_id of the parties using this client.
+                    Depending on how your write your API, you may want to retrieve this ID in order to customise the API response based on the user
+                    associated to the API.'
+                ],
             ]
         );
 
@@ -76,7 +82,7 @@ class JwtFieldset extends Fieldset
                 'type'       => 'textarea',
                 'options'    => [
                     'label' => 'Public key',
-                    'instructions' => 'Enter your game servers public key here'
+                    'instructions' => 'Enter your public key here (if you are running tests, you can grab a test key from the utils/Key folder)'
                 ],
                 'attributes' => [
                     'class' => 'form-control',

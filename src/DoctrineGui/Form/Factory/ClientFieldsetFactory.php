@@ -1,7 +1,7 @@
 <?php
 namespace DoctrineGui\Form\Factory;
 
-use Developer\Form\ClientFieldset;
+use DoctrineGui\Form\ClientFieldset;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZF\OAuth2\Doctrine\Entity\Client;

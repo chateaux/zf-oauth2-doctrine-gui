@@ -48,7 +48,7 @@ class GenerateJwtFieldset extends Fieldset
                 ),
                 'options'    => [
                     'label' => 'Private key',
-                    'instructions' => 'Make sure you use test public/private key pairs here.',
+                    'instructions' => 'Make sure you use test public/private key pairs here (we have provided test keys in the utils/Keys directory)',
                 ],
             ]
         );
