@@ -56,7 +56,7 @@ class ClientFieldset extends Fieldset
                     'class' => 'form-control',
                 ],
                 'options' => [
-                    'label' => 'USer identity',
+                    'label' => 'User identity',
                     'instructions' => 'Enter a user identity (generally the user id associated to the client)'
                 ],
             ]);
