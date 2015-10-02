@@ -161,7 +161,12 @@ class DoctrineGuiController extends AbstractActionController
 
             $this->scopeForm->bind($scopeObject);
 
-            return new ViewModel( array( 'scopes_array' => $scopes_array , 'form' => $this->scopeForm ) );
+            return new ViewModel(
+                array(
+                    'scopes_array' => $scopes_array,
+                    'form' => $this->scopeForm
+                )
+            );
 
         }
 
@@ -169,7 +174,12 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->scopeForm->isValid() ) {
 
-            return new ViewModel( array( 'scopes_array' => $scopes_array , 'form' => $this->scopeForm ) );
+            return new ViewModel(
+                array(
+                    'scopes_array' => $scopes_array,
+                    'form' => $this->scopeForm
+                )
+            );
         }
 
         /**
@@ -279,11 +289,16 @@ class DoctrineGuiController extends AbstractActionController
                 $this->clientForm->bind($clientObject);
                 $user_id = $clientObject->getUser()->getId();
             } else {
-                $clientObject = new Client();
                 $user_id = '';
             }
 
-            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id , 'user_id' => $user_id) );
+            return new ViewModel(
+                array(
+                    'form' => $this->clientForm,
+                    'client_id' => $client_id,
+                    'user_id' => $user_id
+                )
+            );
 
         }
 
@@ -297,13 +312,19 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->clientForm->isValid() ) {
 
-            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id , 'user_id' => $prg['client']['user']) );
+            return new ViewModel(
+                array(
+                    'form' => $this->clientForm,
+                    'client_id' => $client_id,
+                    'user_id' => $prg['client']['user']
+                )
+            );
         }
 
         /**
          * Check the passwords
          */
-        $new_password = '';
+        $newPassword = '';
 
         if (isset($prg['client']['password']) AND isset($prg['client']['passwordRepeat']))
         {
@@ -315,7 +336,7 @@ class DoctrineGuiController extends AbstractActionController
                 return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
 
             } else {
-                $new_password = $prg['client']['password'];
+                $newPassword = $prg['client']['password'];
             }
         }
 
@@ -366,11 +387,11 @@ class DoctrineGuiController extends AbstractActionController
             $clientObject->addScope($scopeObject);
         }
 
-        if ($new_password != '')
+        if ($newPassword)
         {
             $bcrypt = new Bcrypt();
             $bcrypt->setCost(14);
-            $clientObject->setSecret($bcrypt->create($new_password));
+            $clientObject->setSecret($bcrypt->create($newPassword));
         }
 
         $clientObject = $this->clientService->update($clientObject);
@@ -425,11 +446,15 @@ class DoctrineGuiController extends AbstractActionController
                 $jwtObject = new Jwt();
                 $clientObject = $this->clientService->find($client_id);
                 $jwtObject->setClient($clientObject);
-                // $jwtObject->setSubject();    //@TODO The subuject is usually the user_id for the JWT
                 $this->jwtForm->bind($jwtObject);
             }
 
-            return new ViewModel( array( 'form' => $this->jwtForm , 'jwt_id' => $jwt_id) );
+            return new ViewModel(
+                array(
+                    'form' => $this->jwtForm,
+                    'jwt_id' => $jwt_id
+                )
+            );
 
         }
 
@@ -437,7 +462,8 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->jwtForm->isValid() ) {
 
-            return new ViewModel( array( 'form' => $this->jwtForm , 'jwt_id' => $jwt_id ) );
+            return new ViewModel(
+                array( 'form' => $this->jwtForm , 'jwt_id' => $jwt_id ) );
         }
 
         $jwtObject = $this->jwtForm->getData();
@@ -479,8 +505,6 @@ class DoctrineGuiController extends AbstractActionController
             return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
-
-
         $result = $this->jwtService->delete($jwt_id);
 
         if (!$result)
@@ -508,8 +532,6 @@ class DoctrineGuiController extends AbstractActionController
     public function deleteClientAction()
     {
         $client_id = (int) $this->params()->fromRoute('client_id', false);
-
-
 
         if ( ! $client_id )
         {
