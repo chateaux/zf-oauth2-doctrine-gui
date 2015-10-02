@@ -277,9 +277,13 @@ class DoctrineGuiController extends AbstractActionController
             {
                 $clientObject = $this->clientService->find($client_id);
                 $this->clientForm->bind($clientObject);
+                $user_id = $clientObject->getUser()->getId();
+            } else {
+                $clientObject = new Client();
+                $user_id = '';
             }
 
-            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id) );
+            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id , 'user_id' => $user_id) );
 
         }
 
@@ -293,7 +297,7 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->clientForm->isValid() ) {
 
-            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id ) );
+            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id , 'user_id' => $prg['client']['user']) );
         }
 
         /**
@@ -309,6 +313,7 @@ class DoctrineGuiController extends AbstractActionController
                 );
 
                 return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
+
             } else {
                 $new_password = $prg['client']['password'];
             }

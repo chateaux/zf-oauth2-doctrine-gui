@@ -61,6 +61,7 @@ class ClientFieldset extends Fieldset
                 ],
             ]);
 
+
         $this->add([
                 'name'          => 'clientId',
                 'attributes'    => [

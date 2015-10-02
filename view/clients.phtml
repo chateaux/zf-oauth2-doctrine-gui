@@ -41,8 +41,19 @@ $this->FlashMessengerHelper();
                             ?>
                             <tr>
                                 <td>
-                                    <b>Client ID:</b> <?=$client['array_copy']['clientId'];?><br/>
-                                    <b>Subject:</b> <?= (isset($client['public_key']['subject'])) ? $client['public_key']['subject'] : 'Add public key to set';?><br/>
+                                    <b>Client id (name):</b> <?=$client['array_copy']['clientId'];?><br/>
+                                    <b>Client user identity:</b>
+
+                                    <?php
+                                        $userObject = $client['array_copy']['user'];
+
+                                        if ($userObject instanceof \ZF\OAuth2\Doctrine\Entity\UserInterface)
+                                        {
+                                            echo $userObject->getId();
+                                        }
+                                    ?><br/>
+
+                                    <b>JWT subject (user id):</b> <?= (isset($client['public_key']['subject'])) ? $client['public_key']['subject'] : 'Add public key to set';?><br/>
                                     <b>Return uri:</b> <?=($client['array_copy']['redirectUri'] == '') ? 'This must be set for security purposes' : $client['array_copy']['redirectUri'];?><br/>
                                     <b>Grant:</b> <?=implode(', ',$client['array_copy']['grantType']);?><br/>
                                     <b>Scope:</b> <?=implode(', ',$client['scope']);?><br/><br/>

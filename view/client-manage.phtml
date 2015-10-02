@@ -36,6 +36,7 @@ $this->FlashMessengerHelper();
                                     $formublisher   = $form->get('client');
                                     $id             = $formublisher->get('id');
                                     $user           = $formublisher->get('user');
+                                    $user->setValue(1);
                                     $clientId       = $formublisher->get('clientId');
                                     $password       = $formublisher->get('password');
                                     $password_repeat= $formublisher->get('passwordRepeat');
@@ -161,8 +162,6 @@ $this->FlashMessengerHelper();
                             <!-- END PORTLET-->
                         </div>
                     </div>
-
-
 
                 </div>
             </div>
