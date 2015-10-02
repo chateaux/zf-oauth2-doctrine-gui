@@ -52,8 +52,8 @@ return [
             AccessTokenService::class => AccessTokenServiceFactory::class
         ]
     ],
-    'form_elements'      => [
-        'factories'  => [
+    'form_elements' => [
+        'factories' => [
             ClientForm::class => ClientFormFactory::class,
             ClientFieldset::class => ClientFieldsetFactory::class,
             JwtFieldset::class => JwtFieldsetFactory::class,
@@ -69,38 +69,38 @@ return [
             'JwtClientFilter' => JwtFilter::class
         ]
     ],
-    'view_helpers'  => [
-        'invokables'    => [
-            'FlashMessageHelper'   => FlashMessageHelper::class,
+    'view_helpers' => [
+        'invokables' => [
+            'FlashMessageHelper' => FlashMessageHelper::class,
             'DoctrineGuiNavHelper' => DoctrineGuiNavHelper::class
         ]
     ],
     'view_helper_config' => [
         'flashmessenger' => [
-            'message_open_format'      => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
-            'message_close_string'     => '</li></ul></div>',
+            'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
+            'message_close_string' => '</li></ul></div>',
             'message_separator_string' => '</li><li>'
         ]
     ],
     //Little faster setting templates like this
     'view_manager'       => [
         'template_map' => [
-            'doctrine-gui/doctrine-gui/overview'       => __DIR__ . '/../view/overview.phtml',
-            'doctrine-gui/doctrine-gui/games'          => __DIR__ . '/../view/games.phtml',
-            'doctrine-gui/doctrine-gui/clients'        => __DIR__ . '/../view/clients.phtml',
-            'doctrine-gui/doctrine-gui/test-jwt'       => __DIR__ . '/../view/test-jwt.phtml',
-            'doctrine-gui/doctrine-gui/client-manage'  => __DIR__ . '/../view/client-manage.phtml',
-            'doctrine-gui/doctrine-gui/manage-key'     => __DIR__ . '/../view/manage-key.phtml',
-            'doctrine-gui/doctrine-gui/scopes'         => __DIR__ . '/../view/scopes.phtml',
-            'doctrine-gui/layout'                      => __DIR__ . '/../view/layout/layout.phtml',
+            'doctrine-gui/doctrine-gui/overview' => __DIR__ . '/../view/overview.phtml',
+            'doctrine-gui/doctrine-gui/games' => __DIR__ . '/../view/games.phtml',
+            'doctrine-gui/doctrine-gui/clients' => __DIR__ . '/../view/clients.phtml',
+            'doctrine-gui/doctrine-gui/test-jwt' => __DIR__ . '/../view/test-jwt.phtml',
+            'doctrine-gui/doctrine-gui/client-manage' => __DIR__ . '/../view/client-manage.phtml',
+            'doctrine-gui/doctrine-gui/manage-key' => __DIR__ . '/../view/manage-key.phtml',
+            'doctrine-gui/doctrine-gui/scopes' => __DIR__ . '/../view/scopes.phtml',
+            'doctrine-gui/layout' => __DIR__ . '/../view/layout/layout.phtml',
         ]
     ],
     'asset_manager' => [
         'caching' => [
             'default' => [
-                'cache'     => 'FilePath',  // Apc, FilePath, FileSystem etc.
+                'cache' => 'FilePath',  // Apc, FilePath, FileSystem etc.
                 'options' => [
-                    'dir'   => 'public'
+                    'dir' => 'public'
                 ]
             ],
         ],
@@ -122,61 +122,61 @@ return [
                 'may_terminate' => false,
                 'child_routes' => [
                     'overview' => [
-                        'type'    => 'Literal',
+                        'type' => 'Literal',
                         'options' => [
-                            'route'    => '/overview',
+                            'route' => '/overview',
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'overview',
+                                'action' => 'overview',
                             ],
                         ]
                     ],
                     'clients' => [
-                        'type'    => 'Literal',
+                        'type' => 'Literal',
                         'options' => [
-                            'route'    => '/clients',
+                            'route' => '/clients',
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'clients',
+                                'action' => 'clients',
                             ],
                         ]
                     ],
                     'scopes' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/scopes[/:scope_id]',
+                            'route' => '/scopes[/:scope_id]',
                             'constraints' => [
                                 'scope_id' => '[0-9]+'
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'scopes',
+                                'action' => 'scopes',
                             ],
                         ]
                     ],
                     'scope-delete' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/scope-delete/:scope_id',
+                            'route' => '/scope-delete/:scope_id',
                             'constraints' => [
                                 'scope_id' => '[0-9]+'
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'scope-delete',
+                                'action' => 'scope-delete',
                             ],
                         ]
                     ],
                     'scope-toggle' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/scope-toggle/:scope_id',
+                            'route' => '/scope-toggle/:scope_id',
                             'constraints' => [
                                 'scope_id' => '[0-9]+'
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'scope-toggle',
+                                'action' => 'scope-toggle',
                             ],
                         ]
                     ],
@@ -190,12 +190,12 @@ return [
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'test-jwt',
+                                'action'  => 'test-jwt',
                             ],
                         ]
                     ],
                     'manage-key' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
                             'route'    => '/manage-key[/:client_id]/:jwt_id',
                             'constraints' => [
@@ -204,50 +204,49 @@ return [
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'manage-key',
+                                'action' => 'manage-key',
                             ],
                         ]
                     ],
                     'delete-jwt-key' => [
                         'type'    => 'Segment',
                         'options' => [
-                            'route'    => '/delete-jwt-key/:jwt_id',
+                            'route'  => '/delete-jwt-key/:jwt_id',
                             'constraints' => [
                                 'jwt_id' => '[0-9]+'
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'delete-jwt-key',
+                                'action' => 'delete-jwt-key',
                             ],
                         ]
                     ],
                     'delete-client' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/delete-client/:client_id',
+                            'route' => '/delete-client/:client_id',
                             'constraints' => [
                                 'client_id' => '[0-9]+'
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'delete-client',
+                                'action' => 'delete-client',
                             ],
                         ]
                     ],
                     'client-manage' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/client-manage/[:client_id]',
+                            'route' => '/client-manage/[:client_id]',
                             'constraints' => [
                                 'client_id' => '[0-9]+'
                             ],
                             'defaults' => [
                                 'controller' => DoctrineGuiController::class,
-                                'action'     => 'client-manage',
+                                'action' => 'client-manage',
                             ],
                         ]
                     ]
-
 
                 ]
             ]
