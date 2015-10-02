@@ -13,6 +13,7 @@ You will require:
 
 1. zf-oauth2-doctrine
 2. Asset Manager
+3. MDGUUID (A neat little token generator)
 
 ## How it works
 
