@@ -49,6 +49,19 @@ class ClientFieldset extends Fieldset
         );
 
         $this->add([
+                'name'          => 'user',
+                'attributes'    => [
+                    'required' => 'required',
+                    'type' => 'text',
+                    'class' => 'form-control',
+                ],
+                'options' => [
+                    'label' => 'USer identity',
+                    'instructions' => 'Enter a user identity (generally the user id associated to the client)'
+                ],
+            ]);
+
+        $this->add([
                 'name'          => 'clientId',
                 'attributes'    => [
                     'required' => 'required',

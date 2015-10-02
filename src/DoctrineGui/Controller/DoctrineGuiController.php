@@ -361,8 +361,6 @@ class DoctrineGuiController extends AbstractActionController
             $clientObject->addScope($scopeObject);
         }
 
-        $clientObject->setUser();  //@TODO Add user
-
         if ($new_password != '')
         {
             $bcrypt = new Bcrypt();
@@ -422,7 +420,7 @@ class DoctrineGuiController extends AbstractActionController
                 $jwtObject = new Jwt();
                 $clientObject = $this->clientService->find($client_id);
                 $jwtObject->setClient($clientObject);
-                // $jwtObject->setSubject();    //@TODO Add the client id
+                // $jwtObject->setSubject();    //@TODO The subuject is usually the user_id for the JWT
                 $this->jwtForm->bind($jwtObject);
             }
 
