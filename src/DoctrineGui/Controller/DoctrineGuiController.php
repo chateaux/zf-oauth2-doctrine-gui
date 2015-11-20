@@ -31,7 +31,6 @@ class DoctrineGuiController extends AbstractActionController
      * @param JwtService $jwtService
      * @param ScopeService $scopeService
      * @param AccessTokenService $accessTokenService
-     * @param DoctrineAdapter $doctrineAdapter
      * @param FormInterface $clientForm
      * @param FormInterface $jwtForm
      * @param FormInterface $generateJwtForm
@@ -42,7 +41,6 @@ class DoctrineGuiController extends AbstractActionController
         JwtService             $jwtService,
         ScopeService           $scopeService,
         AccessTokenService     $accessTokenService,
-        DoctrineAdapter        $doctrineAdapter,
         FormInterface          $clientForm,
         FormInterface          $jwtForm,
         FormInterface          $generateJwtForm,
@@ -53,7 +51,6 @@ class DoctrineGuiController extends AbstractActionController
         $this->jwtService      = $jwtService;
         $this->scopeService    = $scopeService;
         $this->accessTokenService = $accessTokenService;
-        $this->doctrinAdapter  = $doctrineAdapter;
         $this->clientForm      = $clientForm;
         $this->jwtForm         = $jwtForm;
         $this->testJwtForm     = $generateJwtForm;
