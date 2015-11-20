@@ -36,7 +36,7 @@ $this->FlashMessengerHelper();
                                     $formublisher   = $form->get('client');
                                     $id             = $formublisher->get('id');
                                     $user           = $formublisher->get('user');
-                                    $user->setValue(1);
+                                    $user->setValue($this->user_id);
                                     $clientId       = $formublisher->get('clientId');
                                     $password       = $formublisher->get('password');
                                     $password_repeat= $formublisher->get('passwordRepeat');
