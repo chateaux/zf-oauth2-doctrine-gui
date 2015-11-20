@@ -69,9 +69,14 @@ $this->FlashMessengerHelper();
                                         <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/delete-client', ['client_id' => $client['array_copy']['id']]);?>">
                                             <i class="fa fa-key"></i> Delete Client</a><br/><br/>
 
-                                        <?php if (in_array('implicit',$client['array_copy']['grantType'])) {?>
+                                        <?php if ( in_array('implicit',$client['array_copy']['grantType']) ) {?>
                                         <a class="btn btn-primary btn-xs" target="_blank" href="/oauth/authorize?client_id=<?=$client['array_copy']['clientId'];?>&response_type=token&state=your_random_token&redirect_uri=<?=$client['array_copy']['redirectUri'];?>">
                                             <i class="fa fa-cloud-download"></i> Test SSO Login</a>
+                                        <?php } ?>
+
+                                        <?php if ( in_array('authorization_code',$client['array_copy']['grantType']) ) {?>
+                                            <a class="btn btn-primary btn-xs" target="_blank" href="/oauth/authorize?client_id=<?=$client['array_copy']['clientId'];?>&response_type=code&state=your_random_token&redirect_uri=<?=$client['array_copy']['redirectUri'];?>">
+                                                <i class="fa fa-cloud-download"></i> Test SSO Login</a>
                                         <?php } ?>
 
                                         <?php if ( in_array('urn:ietf:params:oauth:grant-type:jwt-bearer',$client['array_copy']['grantType']) AND !empty($client['public_key']) ) { ?>
