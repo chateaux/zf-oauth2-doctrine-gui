@@ -267,6 +267,7 @@ class DoctrineGuiController extends AbstractActionController
 
     /**
      * Edit and add new clients
+     * client_id refers to the id field of the client (1,2,3...n)
      * @return array|Response|ViewModel
      */
     public function clientManageAction()
@@ -280,13 +281,18 @@ class DoctrineGuiController extends AbstractActionController
             return $prg;
         } elseif ($prg === false) {
 
+            $user_id = '';
+
             if ($client_id != 0)
             {
                 $clientObject = $this->clientService->find($client_id);
                 $this->clientForm->bind($clientObject);
-                $user_id = $clientObject->getUser()->getId();
-            } else {
-                $user_id = '';
+                $userObject = $clientObject->getUser();
+
+                if (is_object($userObject)) {
+                    $user_id = $userObject->getId();
+                }
+
             }
 
             return new ViewModel(
