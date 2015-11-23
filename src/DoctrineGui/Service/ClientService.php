@@ -10,6 +10,7 @@ namespace DoctrineGui\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\PersistentCollection;
 use ZF\OAuth2\Doctrine\Entity\Client;
 
 class ClientService
@@ -136,6 +137,41 @@ class ClientService
             {
                 return true;
             }
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Is a given client authorized to access a given scope
+     * @param $client_id
+     * @param $scope
+     * @return bool
+     */
+    public function clientHasScopeAccess($client_id,$scope)
+    {
+        $client_scopes = [];
+
+        $clientObject = $this->findByClientId($client_id);
+
+        $persistentCollection = $clientObject->getScope();
+
+        if (! $persistentCollection instanceof PersistentCollection )
+        {
+            return false;
+        }
+
+        $scopes = $persistentCollection->getValues();
+
+        foreach ($scopes AS $scopeObject)
+        {
+            $client_scopes[] = $scopeObject->getScope();
+        }
+
+        if (in_array($scope,$client_scopes))
+        {
+            return true;
         }
 
         return false;

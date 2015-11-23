@@ -41,8 +41,19 @@ $this->FlashMessengerHelper();
                             ?>
                             <tr>
                                 <td>
-                                    <b>Client ID:</b> <?=$client['array_copy']['clientId'];?><br/>
-                                    <b>Subject:</b> <?= (isset($client['public_key']['subject'])) ? $client['public_key']['subject'] : 'Add public key to set';?><br/>
+                                    <b>Client id (name):</b> <?=$client['array_copy']['clientId'];?><br/>
+                                    <b>Client user identity:</b>
+
+                                    <?php
+                                        $userObject = $client['array_copy']['user'];
+
+                                        if ($userObject instanceof \ZF\OAuth2\Doctrine\Entity\UserInterface)
+                                        {
+                                            echo $userObject->getId();
+                                        }
+                                    ?><br/>
+
+                                    <b>JWT subject (user id):</b> <?= (isset($client['public_key']['subject'])) ? $client['public_key']['subject'] : 'Add public key to set';?><br/>
                                     <b>Return uri:</b> <?=($client['array_copy']['redirectUri'] == '') ? 'This must be set for security purposes' : $client['array_copy']['redirectUri'];?><br/>
                                     <b>Grant:</b> <?=implode(', ',$client['array_copy']['grantType']);?><br/>
                                     <b>Scope:</b> <?=implode(', ',$client['scope']);?><br/><br/>
@@ -50,19 +61,25 @@ $this->FlashMessengerHelper();
                                         <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/client-manage', ['client_id' => $client['array_copy']['id']]);?>">
                                             <i class="fa fa-cloud"></i> Edit Client</a>
 
-                                            <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/manage-key', ['client_id' => $client['array_copy']['id'] , 'jwt_id' => 0]);?>">
+                                        <?php if (in_array('urn:ietf:params:oauth:grant-type:jwt-bearer',$client['array_copy']['grantType'])) { ?>
+                                            <a class="btn btn-primary btn-xs" href="<?= $this->url('zf-oauth-doctrine-gui/manage-key',['client_id' => $client['array_copy']['id'], 'jwt_id' => 0]); ?>">
                                                 <i class="fa fa-key"></i> Add Public Key</a>
+                                        <?php } ?>
 
                                         <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/delete-client', ['client_id' => $client['array_copy']['id']]);?>">
                                             <i class="fa fa-key"></i> Delete Client</a><br/><br/>
 
-                                        <?php if (in_array('implicit',$client['array_copy']['grantType'])) { ?>
+                                        <?php if ( in_array('implicit',$client['array_copy']['grantType']) ) {?>
                                         <a class="btn btn-primary btn-xs" target="_blank" href="/oauth/authorize?client_id=<?=$client['array_copy']['clientId'];?>&response_type=token&state=your_random_token&redirect_uri=<?=$client['array_copy']['redirectUri'];?>">
                                             <i class="fa fa-cloud-download"></i> Test SSO Login</a>
                                         <?php } ?>
 
-                                        <?php
-                                        if ( in_array('urn:ietf:params:oauth:grant-type:jwt-bearer',$client['array_copy']['grantType']) AND !empty($client['public_key']) ) { ?>
+                                        <?php if ( in_array('authorization_code',$client['array_copy']['grantType']) ) {?>
+                                            <a class="btn btn-primary btn-xs" target="_blank" href="/oauth/authorize?client_id=<?=$client['array_copy']['clientId'];?>&response_type=code&state=your_random_token&redirect_uri=<?=$client['array_copy']['redirectUri'];?>">
+                                                <i class="fa fa-cloud-download"></i> Test SSO Login</a>
+                                        <?php } ?>
+
+                                        <?php if ( in_array('urn:ietf:params:oauth:grant-type:jwt-bearer',$client['array_copy']['grantType']) AND !empty($client['public_key']) ) { ?>
                                             <a class="btn btn-primary btn-xs" href="<?=$this->url('zf-oauth-doctrine-gui/test-jwt' , [ 'jwt_id' => $client['public_key']['id'] , 'client_id' => $client['array_copy']['id'] ]);?>">
                                                 <i class="fa fa-cloud-upload"></i> Test JWT Authentication</a>
                                         <?php }  ?>

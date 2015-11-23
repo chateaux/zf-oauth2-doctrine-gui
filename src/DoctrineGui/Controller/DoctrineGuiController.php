@@ -31,7 +31,6 @@ class DoctrineGuiController extends AbstractActionController
      * @param JwtService $jwtService
      * @param ScopeService $scopeService
      * @param AccessTokenService $accessTokenService
-     * @param DoctrineAdapter $doctrineAdapter
      * @param FormInterface $clientForm
      * @param FormInterface $jwtForm
      * @param FormInterface $generateJwtForm
@@ -42,7 +41,6 @@ class DoctrineGuiController extends AbstractActionController
         JwtService             $jwtService,
         ScopeService           $scopeService,
         AccessTokenService     $accessTokenService,
-        DoctrineAdapter        $doctrineAdapter,
         FormInterface          $clientForm,
         FormInterface          $jwtForm,
         FormInterface          $generateJwtForm,
@@ -53,7 +51,6 @@ class DoctrineGuiController extends AbstractActionController
         $this->jwtService      = $jwtService;
         $this->scopeService    = $scopeService;
         $this->accessTokenService = $accessTokenService;
-        $this->doctrinAdapter  = $doctrineAdapter;
         $this->clientForm      = $clientForm;
         $this->jwtForm         = $jwtForm;
         $this->testJwtForm     = $generateJwtForm;
@@ -161,7 +158,12 @@ class DoctrineGuiController extends AbstractActionController
 
             $this->scopeForm->bind($scopeObject);
 
-            return new ViewModel( array( 'scopes_array' => $scopes_array , 'form' => $this->scopeForm ) );
+            return new ViewModel(
+                array(
+                    'scopes_array' => $scopes_array,
+                    'form' => $this->scopeForm
+                )
+            );
 
         }
 
@@ -169,7 +171,12 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->scopeForm->isValid() ) {
 
-            return new ViewModel( array( 'scopes_array' => $scopes_array , 'form' => $this->scopeForm ) );
+            return new ViewModel(
+                array(
+                    'scopes_array' => $scopes_array,
+                    'form' => $this->scopeForm
+                )
+            );
         }
 
         /**
@@ -260,6 +267,7 @@ class DoctrineGuiController extends AbstractActionController
 
     /**
      * Edit and add new clients
+     * client_id refers to the id field of the client (1,2,3...n)
      * @return array|Response|ViewModel
      */
     public function clientManageAction()
@@ -273,13 +281,27 @@ class DoctrineGuiController extends AbstractActionController
             return $prg;
         } elseif ($prg === false) {
 
+            $user_id = '';
+
             if ($client_id != 0)
             {
                 $clientObject = $this->clientService->find($client_id);
                 $this->clientForm->bind($clientObject);
+                $userObject = $clientObject->getUser();
+
+                if (is_object($userObject)) {
+                    $user_id = $userObject->getId();
+                }
+
             }
 
-            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id) );
+            return new ViewModel(
+                array(
+                    'form' => $this->clientForm,
+                    'client_id' => $client_id,
+                    'user_id' => $user_id
+                )
+            );
 
         }
 
@@ -293,13 +315,19 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->clientForm->isValid() ) {
 
-            return new ViewModel( array( 'form' => $this->clientForm , 'client_id' => $client_id ) );
+            return new ViewModel(
+                array(
+                    'form' => $this->clientForm,
+                    'client_id' => $client_id,
+                    'user_id' => $prg['client']['user']
+                )
+            );
         }
 
         /**
          * Check the passwords
          */
-        $new_password = '';
+        $newPassword = '';
 
         if (isset($prg['client']['password']) AND isset($prg['client']['passwordRepeat']))
         {
@@ -309,8 +337,9 @@ class DoctrineGuiController extends AbstractActionController
                 );
 
                 return $this->redirect()->toRoute('zf-oauth-doctrine-gui/client-manage' , ['client_id' => $client_id]);
+
             } else {
-                $new_password = $prg['client']['password'];
+                $newPassword = $prg['client']['password'];
             }
         }
 
@@ -361,13 +390,11 @@ class DoctrineGuiController extends AbstractActionController
             $clientObject->addScope($scopeObject);
         }
 
-        $clientObject->setUser();  //@TODO Add user
-
-        if ($new_password != '')
+        if ($newPassword)
         {
             $bcrypt = new Bcrypt();
             $bcrypt->setCost(14);
-            $clientObject->setSecret($bcrypt->create($new_password));
+            $clientObject->setSecret($bcrypt->create($newPassword));
         }
 
         $clientObject = $this->clientService->update($clientObject);
@@ -422,11 +449,15 @@ class DoctrineGuiController extends AbstractActionController
                 $jwtObject = new Jwt();
                 $clientObject = $this->clientService->find($client_id);
                 $jwtObject->setClient($clientObject);
-                // $jwtObject->setSubject();    //@TODO Add the client id
                 $this->jwtForm->bind($jwtObject);
             }
 
-            return new ViewModel( array( 'form' => $this->jwtForm , 'jwt_id' => $jwt_id) );
+            return new ViewModel(
+                array(
+                    'form' => $this->jwtForm,
+                    'jwt_id' => $jwt_id
+                )
+            );
 
         }
 
@@ -434,7 +465,8 @@ class DoctrineGuiController extends AbstractActionController
 
         if ( ! $this->jwtForm->isValid() ) {
 
-            return new ViewModel( array( 'form' => $this->jwtForm , 'jwt_id' => $jwt_id ) );
+            return new ViewModel(
+                array( 'form' => $this->jwtForm , 'jwt_id' => $jwt_id ) );
         }
 
         $jwtObject = $this->jwtForm->getData();
@@ -476,8 +508,6 @@ class DoctrineGuiController extends AbstractActionController
             return $this->redirect()->toRoute('zf-oauth-doctrine-gui/clients');
         }
 
-
-
         $result = $this->jwtService->delete($jwt_id);
 
         if (!$result)
@@ -505,8 +535,6 @@ class DoctrineGuiController extends AbstractActionController
     public function deleteClientAction()
     {
         $client_id = (int) $this->params()->fromRoute('client_id', false);
-
-
 
         if ( ! $client_id )
         {

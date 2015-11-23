@@ -25,6 +25,16 @@ class ClientFilter extends InputFilter
         );
 
         $this->add( array(
+                'name'      => 'user',
+                'required'  => true,
+                'filters'   => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+            )
+        );
+
+        $this->add( array(
                 'name'      => 'clientId',
                 'required'  => true,
                 'filters'   => array(
