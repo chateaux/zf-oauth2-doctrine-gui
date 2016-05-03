@@ -46,7 +46,7 @@ class ClientFilter extends InputFilter
 
         $this->add( array(
                 'name'      => 'redirectUri',
-                'required'  => true,
+                'required'  => false,
                 'filters'   => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
