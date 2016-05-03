@@ -106,7 +106,6 @@ class ClientFieldset extends Fieldset
         $this->add([
                 'name'          => 'redirectUri',
                 'attributes'    => [
-                    'required' => 'required',
                     'type' => 'text',
                     'class' => 'form-control',
                 ],
@@ -127,6 +126,7 @@ class ClientFieldset extends Fieldset
                         'authorization_code' => 'authorization_code',
                         'access_token' => 'access_token',
                         'refresh_token' => 'refresh_token',
+                        'client_credentials' => 'client_credentials',
                         'urn:ietf:params:oauth:grant-type:jwt-bearer' => 'urn:ietf:params:oauth:grant-type:jwt-bearer'
                     ],
                     'multiple' => true,
